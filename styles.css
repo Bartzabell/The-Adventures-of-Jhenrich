@@ -1,0 +1,78 @@
+.grid-cols-20 {
+            grid-template-columns: repeat(25, minmax(0, 1fr));
+        }
+
+.game-tile {
+    width: 61px;
+    height: 61px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.character {
+    position: absolute;
+    width: 59px;
+    height: 59px;
+    background-size: cover;
+    background-position: center;
+    z-index: 10;
+    transition: all 0.2s ease;
+    top: 2.5px;
+    left: 2.5px;
+    border-radius: 50%;
+}
+
+.priest {
+    background-image: url('img/characters/priest.png');
+    height: 30;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.soldier {
+    background-image: url('img/characters/soldier.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.grass { 
+    background-image: url('img/grass03.png');
+}
+
+.brick { 
+    background-image: url('img/brick.png');
+}
+
+.white-block { 
+    background-color: white; 
+    border: 1px solid #ccc;
+}
+
+.battle-screen {
+    background: linear-gradient(135deg, #1e40af, #3730a3);
+}
+
+.health-bar {
+    transition: width 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+.shake { 
+    animation: shake 0.5s; 
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in { 
+    animation: fadeIn 0.5s; 
+}
