@@ -45,9 +45,8 @@
     background-image: url('img/brick.png');
 }
 
-.white-block { 
-    background-color: white; 
-    border: 1px solid #ccc;
+.house { 
+    background-image: url('img/house.png');
 }
 
 .battle-screen {

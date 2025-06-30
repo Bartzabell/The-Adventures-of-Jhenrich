@@ -3,7 +3,7 @@
 // Map data (1 = grass, 2 = brick, 0 = cant move)
 const mapData = [
     [1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
-    [1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,0,0,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
     [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
     [1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
     [1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -50,7 +50,7 @@ function createMap() {
     mapData.forEach((row, y) => {
         row.forEach((tile, x) => {
             const tileDiv = document.createElement('div');
-            tileDiv.className = `game-tile ${tile === 0 ? 'white-block' : tile === 1 ? 'grass' : 'brick'}`;
+            tileDiv.className = `game-tile ${tile === 0 ? 'house' : tile === 1 ? 'grass' : 'brick'}`;
             tileDiv.dataset.x = x;
             tileDiv.dataset.y = y;
             
