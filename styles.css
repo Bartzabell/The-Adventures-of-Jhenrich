@@ -49,6 +49,10 @@
     background-image: url('img/house.png');
 }
 
+.fence { 
+    background-image: url('img/fence.png');
+}
+
 .battle-screen {
     background: linear-gradient(135deg, #1e40af, #3730a3);
 }

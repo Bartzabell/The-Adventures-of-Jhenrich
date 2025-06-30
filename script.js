@@ -3,7 +3,7 @@
 // Map data (1 = grass, 2 = brick, 0 = cant move)
 const mapData = [
     [1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
-    [1,1,1,1,1,1,1,1,1,0,0,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
+    [3,3,3,3,3,3,3,3,3,3,0,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
     [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
     [1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
     [1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -50,7 +50,7 @@ function createMap() {
     mapData.forEach((row, y) => {
         row.forEach((tile, x) => {
             const tileDiv = document.createElement('div');
-            tileDiv.className = `game-tile ${tile === 0 ? 'house' : tile === 1 ? 'grass' : 'brick'}`;
+            tileDiv.className = `game-tile ${tile === 3 ? 'fence' :tile === 0 ? 'house' : tile === 1 ? 'grass' : 'brick'}`;
             tileDiv.dataset.x = x;
             tileDiv.dataset.y = y;
             
@@ -108,7 +108,7 @@ function movePlayer(dx, dy) {
     if (newX < 0 || newX >= mapData[0].length || newY < 0 || newY >= mapData.length) return;
     
     // Check if it's a walkable tile (1 or 2)
-    if (mapData[newY][newX] === 0) return; // Can't walk on white block
+    if (mapData[newY][newX] === 0 || mapData[newY][newX] === 3) return; // Can't walk on white block
     
     // Update player position
     gameState.playerX = newX;
