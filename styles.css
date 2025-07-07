@@ -1,81 +1,279 @@
-.grid-cols-20 {
-            grid-template-columns: repeat(25, minmax(0, 1fr));
-        }
-
-.game-tile {
-    width: 61px;
-    height: 61px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
-.character {
+.game-world {
+    background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 60%, #228B22 60%, #228B22 100%);
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sun {
     position: absolute;
-    width: 59px;
-    height: 59px;
-    background-size: cover;
-    background-position: center;
-    z-index: 10;
-    transition: all 0.2s ease;
-    top: 2.5px;
-    left: 2.5px;
+    top: 50px;
+    right: 100px;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+.clouds {
+    position: absolute;
+    top: 80px;
+    left: 200px;
+    width: 100px;
+    height: 40px;
+    background: white;
+    border-radius: 40px;
+    opacity: 0.8;
+}
+
+.clouds::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    background: white;
     border-radius: 50%;
 }
 
-.priest {
-    background-image: url('img/characters/Priest.png');
-    height: 30;
-    background-size: cover;
-    background-position: center;
+.ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: repeating-linear-gradient(
+        0deg,
+        #8B4513 0px,
+        #8B4513 20px,
+        #A0522D 20px,
+        #A0522D 40px
+    );
+}
+
+.player {
+    position: absolute;
+    bottom: 90px;
+    left: 100px;
+    width: 100px;
+    height: 100px;
+    transition: left 0.3s ease;
+    z-index: 10;
+}
+
+.enemy {
+    position: absolute;
+    bottom: 120px;
+    width: 50px;
+    height: 50px;
+    background: #E74C3C;
+    border-radius: 50%;
+    border: 3px solid #C0392B;
+    z-index: 5;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    border: 3px solid #333;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.hp-bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+}
+
+.hp-heart {
+    width: 30px;
+    height: 30px;
+    background: #E74C3C;
+    border-radius: 50%;
+    border: 2px solid #C0392B;
+}
+
+.hp-heart.empty {
+    background: #BDC3C7;
+    border-color: #95A5A6;
+}
+
+.progress-bar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #333;
+    z-index: 100;
+}
+
+.animation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.animation-character {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #333;
+}
+
+.swordsman {
+    background: #3498DB;
+}
+
+.mage {
+    background: #2ECC71;
+}
+
+.enemy-attack {
+    background: #E74C3C;
+}
+
+.timer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #E74C3C;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.dialog-box {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 3px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    z-index: 500;
+}
+
+.world-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.world-segment {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    transition: left 0.5s ease;
+}
+
+.player-sprite {
+    background-image: url('img/walk/0.png');
+    background-size: contain;
     background-repeat: no-repeat;
-}
-
-.soldier {
-    background-image: url('img/characters/soldier.png');
-    background-size: cover;
     background-position: center;
+}
+
+.player-sprite.walking-0 {
+    background-image: url('img/walk/0.png');
+}
+
+.player-sprite.walking-1 {
+    background-image: url('img/walk/1.png');
+}
+
+.player-sprite.walking-2 {
+    background-image: url('img/walk/2.png');
+}
+
+.swordsman-sprite {
+    background-image: url('img/swords-man/0.png');
+    background-size: contain;
     background-repeat: no-repeat;
-}
-.grass { 
-    background-image: url('img/grass03.png');
+    background-position: center;
 }
 
-.brick { 
-    background-image: url('img/brick.png');
+.swordsman-sprite.frame-0 {
+    background-image: url('img/swords-man/0.png');
 }
 
-.house { 
-    background-image: url('img/house.png');
+.swordsman-sprite.frame-1 {
+    background-image: url('img/swords-man/1.png');
 }
 
-.fence { 
-    background-image: url('img/fence.png');
+.swordsman-sprite.frame-2 {
+    background-image: url('img/swords-man/2.png');
 }
 
-.battle-screen {
-    background: linear-gradient(135deg, #1e40af, #3730a3);
+.mage-sprite {
+    background-image: url('img/mage/0.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.health-bar {
-    transition: width 0.3s ease;
+.mage-sprite.frame-0 {
+    background-image: url('img/mage/0.png');
 }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-2px); }
-    75% { transform: translateX(2px); }
+.mage-sprite.frame-1 {
+    background-image: url('img/mage/1.png');
 }
 
-.shake { 
-    animation: shake 0.5s; 
+.enemy-sprite {
+    background-image: url('img/enemy/0.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.enemy-sprite.frame-0 {
+    background-image: url('img/enemy/0.png');
 }
 
-.fade-in { 
-    animation: fadeIn 0.5s; 
+.enemy-sprite.frame-1 {
+    background-image: url('img/enemy/1.png');
 }
